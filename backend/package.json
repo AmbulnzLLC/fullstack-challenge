@@ -1,0 +1,42 @@
+{
+  "name": "fullstack-case",
+  "version": "1.0.0",
+  "description": "Desafio fullstack",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node --inspect ./build/index.js",
+    "dev": "tsnd --transpile-only --ignore-watch node_modules ./src/index.ts",
+    "test": "ts-node-dev ./src/services/authenticator.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carol-kazue/back-end-challenge-Amaro.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carol-kazue/back-end-challenge-Amaro/issues"
+  },
+  "homepage": "https://github.com/carol-kazue/back-end-challenge-Amaro#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.5",
+    "mysql": "^2.18.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.8",
+    "@types/express": "^4.17.8",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/knex": "^0.16.1",
+    "@types/node": "^14.11.2",
+    "@types/uuid": "^8.3.4",
+    "ts-node-dev": "^1.0.0-pre.63",
+    "typescript": "4.6.4"
+  }
+}
