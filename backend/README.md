@@ -7,14 +7,13 @@ Prerequisites
 * [Git](http://git-scm.com/)
 * [MySQL](https://www.mysql.com/)
 
-Option one
-* [nodejs](https://nodejs.org/en/)
-* nodejs framework of your choice
+Option one (preferred)
+* [Ruby](https://www.ruby-lang.org)
+* Ruby framework of your choice (Rails preferred)
 
 Option two
-* [Ruby](https://www.ruby-lang.org)
-* Ruby framework of your choice
-
+* [nodejs](https://nodejs.org/en/)
+* nodejs framework of your choice
 
 * You can use any additional libraries you want.
 

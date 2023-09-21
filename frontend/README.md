@@ -9,11 +9,11 @@ Prerequisites
 * [Git](http://git-scm.com/)
 * [npm](https://www.npmjs.org/)
 
-Option one
-* [reactjs](https://reactjs.org/)
+Option one (preferred)
+* [angularjs](https://angularjs.org/)
 
 Option two
-* [angularjs](https://angularjs.org/)
+* [reactjs](https://reactjs.org/)
 
 
 * You can use any additional libraries you want.
