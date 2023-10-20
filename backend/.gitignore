@@ -18,6 +18,6 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 
-
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+# /config/master.key
+# /config/credentials/test.key

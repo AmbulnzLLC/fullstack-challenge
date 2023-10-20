@@ -1,23 +1,26 @@
 [
   {
+    "id": "1",
     "name": "Margherita",
-    "price": 5,
+    "price": 5.00,
     "ingredients": [
       "tomato",
       "mozzarella"
     ]
   },
   {
+    "id": "2",
     "name": "Bufala",
-    "price": 6,
+    "price": 6.00,
     "ingredients": [
       "tomato",
       "mozarella di bufala"
     ]
   },
   {
+    "id": "3",
     "name": "Romana",
-    "price": 5,
+    "price": 5.00,
     "ingredients": [
       "tomato",
       "mozzarella",
@@ -27,8 +30,9 @@
     ]
   },
   {
+    "id": "4",
     "name": "Diavola",
-    "price": 7.5,
+    "price": 7.50,
     "ingredients": [
       "tomato",
       "mozzarella",
@@ -36,8 +40,9 @@
     ]
   },
   {
+    "id": "5",
     "name": "Pizza Bianca",
-    "price": 5,
+    "price": 5.00,
     "ingredients": [
       "mozzarella",
       "oregano"
