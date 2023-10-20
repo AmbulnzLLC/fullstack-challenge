@@ -1,5 +1,5 @@
 FactoryBot.define do
-  sequence(:pizza_id_sequence) { |n| n }
+  sequence(:pizza_id_sequence) { |n| n.to_s }
 
   factory :pizza, class: Hash do
     id { generate(:pizza_id_sequence) }
