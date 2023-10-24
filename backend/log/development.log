@@ -1686,3 +1686,6 @@ Processing by Api::PizzasController#index as HTML
 Completed 200 OK in 31ms (Views: 26.7ms | ActiveRecord: 1.2ms | Allocations: 13235)
 
 
+  [1m[36mPizza Load (0.3ms)[0m  [1m[34mSELECT "items".* FROM "items" ORDER BY "items"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPizza Load (0.3ms)[0m  [1m[34mSELECT "items".* FROM "items" ORDER BY "items"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mIngredient Load (0.3ms)[0m  [1m[34mSELECT "ingredients".* FROM "ingredients" INNER JOIN "pizza_ingredients" ON "ingredients"."id" = "pizza_ingredients"."ingredient_id" WHERE "pizza_ingredients"."item_id" = ?[0m  [["item_id", 1]]

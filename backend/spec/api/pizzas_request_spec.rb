@@ -1,18 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::Pizzas', type: :request do
-  let!(:pizza_one) { create(:pizza) }
-  let!(:pizza_two) { create(:pizza) }
+  let!(:pizzas) { create_list(:pizza, (SecureRandom.random_number * 5).to_i) }
 
   describe 'show' do
     describe 'GET /api/pizzas' do
       subject { get '/api/pizzas' }
 
       it 'should return all pizzas' do
-        byebug
         subject
         expect(response.status).to eq(200)
-        expect(response.body).to eq(pizzas[pizza_index].to_json)
+        expect(JSON.parse(response.body).count).to eq(pizzas.count)
       end
     end
   end

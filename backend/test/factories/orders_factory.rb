@@ -1,5 +1,9 @@
 FactoryBot.define do
   factory :order do
-    association :items, factory: :pizza, strategy: :build_list, size: (SecureRandom.random_number * 10).to_i
+    after(:create) do |order|
+      pizzas = create_list(:pizza, (SecureRandom.random_number * 5).to_i)
+      order.items << pizzas
+      order.save!
+    end
   end
 end

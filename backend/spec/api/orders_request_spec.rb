@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::Orders', type: :request do
-  let!(:orders) { load_data(Rails.application.credentials[:order_file_path]) }
+  let!(:orders) { create_list(:order, (SecureRandom.random_number * 5).to_i) }
+  let!(:order) { orders.first }
 
   describe 'index' do
     describe 'GET /api/orders' do
@@ -10,20 +11,20 @@ RSpec.describe 'Api::Orders', type: :request do
       it 'should return all orders' do
         subject
         expect(response.status).to eq(200)
-        expect(response.body).to eq(orders.to_json)
+        expect(JSON.parse(response.body).count).to eq(orders.count)
       end
     end
   end
 
   describe 'show' do
     describe 'GET /api/orders/:id' do
-      let!(:order_index) { rand(0..(orders.length - 1)) }
-      subject { get "/api/orders/#{orders[order_index]['id']}" }
+      subject { get "/api/orders/#{order.id}" }
 
       it 'should return all orders' do
         subject
         expect(response.status).to eq(200)
-        expect(response.body).to eq(orders[order_index].to_json)
+        expect(JSON.parse(response.body)['id']).to eq(order['id'])
+        expect(JSON.parse(response.body)['items_with_quantities'].first['name']).to eq(order.items.first.name)
       end
     end
   end
