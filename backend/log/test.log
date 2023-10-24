@@ -1,0 +1,136 @@
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "ingredients"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "ingredients" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_ingredients_on_name" ON "ingredients" ("name")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "items"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "price" float, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "order_items"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "order_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "order_id" integer NOT NULL, "item_id" integer NOT NULL, "quantity" integer DEFAULT 1 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_item_id" ON "order_items" ("item_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_order_id" ON "order_items" ("order_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "orders"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "orders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "total" float, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "pizza_ingredients"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "pizza_ingredients" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "item_id" integer NOT NULL, "ingredient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_pizza_ingredients_on_ingredient_id" ON "pizza_ingredients" ("ingredient_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_pizza_ingredients_on_item_id" ON "pizza_ingredients" ("item_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aorder_items" ("id" integer NOT NULL PRIMARY KEY, "order_id" integer NOT NULL, "item_id" integer NOT NULL, "quantity" integer DEFAULT 1 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aorder_items_on_order_id" ON "aorder_items" ("order_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aorder_items_on_item_id" ON "aorder_items" ("item_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aorder_items" ("id","order_id","item_id","quantity","created_at","updated_at")
+                     SELECT "id","order_id","item_id","quantity","created_at","updated_at" FROM "order_items"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "order_items"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "order_items" ("id" integer NOT NULL PRIMARY KEY, "order_id" integer NOT NULL, "item_id" integer NOT NULL, "quantity" integer DEFAULT 1 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_3e402078fd"
+FOREIGN KEY ("item_id")
+  REFERENCES "items" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_item_id" ON "order_items" ("item_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_order_id" ON "order_items" ("order_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "order_items" ("id","order_id","item_id","quantity","created_at","updated_at")
+                     SELECT "id","order_id","item_id","quantity","created_at","updated_at" FROM "aorder_items"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "aorder_items"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aorder_items" ("id" integer NOT NULL PRIMARY KEY, "order_id" integer NOT NULL, "item_id" integer NOT NULL, "quantity" integer DEFAULT 1 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aorder_items_on_order_id" ON "aorder_items" ("order_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aorder_items_on_item_id" ON "aorder_items" ("item_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aorder_items" ("id","order_id","item_id","quantity","created_at","updated_at")
+                     SELECT "id","order_id","item_id","quantity","created_at","updated_at" FROM "order_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "order_items"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "order_items" ("id" integer NOT NULL PRIMARY KEY, "order_id" integer NOT NULL, "item_id" integer NOT NULL, "quantity" integer DEFAULT 1 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_3e402078fd"
+FOREIGN KEY ("item_id")
+  REFERENCES "items" ("id")
+, CONSTRAINT "fk_rails_e3cb28f071"
+FOREIGN KEY ("order_id")
+  REFERENCES "orders" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_item_id" ON "order_items" ("item_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_order_id" ON "order_items" ("order_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "order_items" ("id","order_id","item_id","quantity","created_at","updated_at")
+                     SELECT "id","order_id","item_id","quantity","created_at","updated_at" FROM "aorder_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aorder_items"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "apizza_ingredients" ("id" integer NOT NULL PRIMARY KEY, "item_id" integer NOT NULL, "ingredient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_apizza_ingredients_on_item_id" ON "apizza_ingredients" ("item_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_apizza_ingredients_on_ingredient_id" ON "apizza_ingredients" ("ingredient_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "apizza_ingredients" ("id","item_id","ingredient_id","created_at","updated_at")
+                     SELECT "id","item_id","ingredient_id","created_at","updated_at" FROM "pizza_ingredients"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "pizza_ingredients"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "pizza_ingredients" ("id" integer NOT NULL PRIMARY KEY, "item_id" integer NOT NULL, "ingredient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_85963a69a0"
+FOREIGN KEY ("ingredient_id")
+  REFERENCES "ingredients" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_pizza_ingredients_on_ingredient_id" ON "pizza_ingredients" ("ingredient_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_pizza_ingredients_on_item_id" ON "pizza_ingredients" ("item_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "pizza_ingredients" ("id","item_id","ingredient_id","created_at","updated_at")
+                     SELECT "id","item_id","ingredient_id","created_at","updated_at" FROM "apizza_ingredients"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "apizza_ingredients"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "apizza_ingredients" ("id" integer NOT NULL PRIMARY KEY, "item_id" integer NOT NULL, "ingredient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_apizza_ingredients_on_item_id" ON "apizza_ingredients" ("item_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_apizza_ingredients_on_ingredient_id" ON "apizza_ingredients" ("ingredient_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "apizza_ingredients" ("id","item_id","ingredient_id","created_at","updated_at")
+                     SELECT "id","item_id","ingredient_id","created_at","updated_at" FROM "pizza_ingredients"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "pizza_ingredients"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "pizza_ingredients" ("id" integer NOT NULL PRIMARY KEY, "item_id" integer NOT NULL, "ingredient_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_85963a69a0"
+FOREIGN KEY ("ingredient_id")
+  REFERENCES "ingredients" ("id")
+, CONSTRAINT "fk_rails_fca554fc63"
+FOREIGN KEY ("item_id")
+  REFERENCES "items" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_pizza_ingredients_on_ingredient_id" ON "pizza_ingredients" ("ingredient_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_pizza_ingredients_on_item_id" ON "pizza_ingredients" ("item_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "pizza_ingredients" ("id","item_id","ingredient_id","created_at","updated_at")
+                     SELECT "id","item_id","ingredient_id","created_at","updated_at" FROM "apizza_ingredients"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "apizza_ingredients"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20231024153706)[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20231024145848),
+(20231024151830),
+(20231024152013),
+(20231024153347);
+
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2023-10-24 18:32:56.273836"], ["updated_at", "2023-10-24 18:32:56.273836"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "ea4bed19dfb5a4e772ca327943563fd41fb60ffa"], ["created_at", "2023-10-24 18:32:56.275700"], ["updated_at", "2023-10-24 18:32:56.275700"]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
